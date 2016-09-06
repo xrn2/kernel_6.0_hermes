@@ -4,7 +4,7 @@
 Works in rom(ALPS 6.0)
 
 * Works:
-	* LCM(nt35596 tianma , nt35596_auo)
+	* LCM(nt35596 tianma , nt35596_auo , nt35532_boe)
 	* Touch (atmel , ft5206)
 	* CW2015
 	* Sdcard
@@ -28,7 +28,6 @@ Works in rom(ALPS 6.0)
 
 
 * Don't work:
-	* LCM (nt35532_boe)
 	* Imgsensor(OV5670)
 	* Lens
 	* IR Blaster
