@@ -1,4 +1,4 @@
-#include <linux/kernel.h> //constant xx
+#include <linux/kernel.h> //constant xx 
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/types.h>
@@ -100,6 +100,7 @@ Functions
 #define GPIO_ENF GPIO_CAMERA_FLASH_EN_PIN
 #define GPIO_ENT GPIO_CAMERA_FLASH_MODE_PIN
 
+#define FLASH_ON_PULSE 15
 
     /*CAMERA-FLASH-EN */
 
@@ -110,51 +111,35 @@ static void work_timeOutFunc(struct work_struct *data);
 
 
 
-
-
-
-
-
-
-
-
-
-
-#if 1//defined(SLT_DRV_W8160_CONFIG)
 int FL_Enable(void)
 {
-	mt_set_gpio_out(GPIO_ENF,GPIO_OUT_ONE);	
-	PK_DBG("FL_Enable line=%d\n",__LINE__);	
-	return 0;
-}
-#else
-int FL_Enable(void)
-{
+	int i =0;
 	if(g_duty==0)
-	{
-		mt_set_gpio_out(GPIO_ENT,GPIO_OUT_ONE);
-		mt_set_gpio_out(GPIO_ENF,GPIO_OUT_ZERO);
-		PK_DBG(" FL_Enable line=%d\n",__LINE__);
+	{  
+	    PK_DBG(" Torch mode enable\n");
+ 	    mt_set_gpio_out(GPIO_ENT,GPIO_OUT_ONE);
+	    mt_set_gpio_out(GPIO_ENF,GPIO_OUT_ZERO);
+	    PK_DBG(" FL_Enable line=%d\n",__LINE__);
 	}
 	else
 	{
-		mt_set_gpio_out(GPIO_ENT,GPIO_OUT_ZERO);
-		mt_set_gpio_out(GPIO_ENF,GPIO_OUT_ONE);
-		PK_DBG(" FL_Enable line=%d\n",__LINE__);
+	    mt_set_gpio_out(GPIO_ENT,GPIO_OUT_ZERO);
+	    mt_set_gpio_out(GPIO_ENF,GPIO_OUT_ONE);
+#if 0
+		for(i =0 ; i< FLASH_ON_PULSE;i++)
+		{
+			udelay(100);
+			mt_set_gpio_out(GPIO_ENF,GPIO_OUT_ZERO);
+			udelay(100);
+			mt_set_gpio_out(GPIO_ENF,GPIO_OUT_ONE);
+		}
+#endif
+            PK_DBG(" FL_Enable line=%d\n",__LINE__);
 	}
 
     return 0;
 }
-#endif
 
-#if 1//defined(SLT_DRV_W8160_CONFIG)
-int FL_Disable(void)
-{
-	mt_set_gpio_out(GPIO_ENF,GPIO_OUT_ZERO);
-	PK_DBG(" FL_Disable line=%d\n",__LINE__);
-    	return 0;
-}
-#else
 int FL_Disable(void)
 {
 
@@ -163,7 +148,6 @@ int FL_Disable(void)
 	PK_DBG(" FL_Disable line=%d\n",__LINE__);
     return 0;
 }
-#endif
 
 int FL_dim_duty(kal_uint32 duty)
 {
@@ -177,7 +161,7 @@ int FL_Init(void)
 {
 
 
-	if(mt_set_gpio_mode(GPIO_ENF,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set gpio mode failed!! \n");}
+    if(mt_set_gpio_mode(GPIO_ENF,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set gpio mode failed!! \n");}
     if(mt_set_gpio_dir(GPIO_ENF,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set gpio dir failed!! \n");}
     if(mt_set_gpio_out(GPIO_ENF,GPIO_OUT_ZERO)){PK_DBG("[constant_flashlight] set gpio failed!! \n");}
     /*Init. to disable*/
@@ -196,24 +180,6 @@ int FL_Uninit(void)
 	FL_Disable();
     return 0;
 }
-
-#if 1//defined(SLT_DRV_W8160_CONFIG)
-void FL_Flash_Mode(void)
-{
-    PK_DBG(" FL_Flash_Mode line=%d\n",__LINE__);	
-    if(mt_set_gpio_mode(GPIO_ENT,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set gpio mode failed!! \n");}
-    if(mt_set_gpio_dir(GPIO_ENT,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set gpio dir failed!! \n");}
-    if(mt_set_gpio_out(GPIO_ENT,GPIO_OUT_ONE)){PK_DBG("[constant_flashlight] set gpio failed!! \n");}
-}
-
-void FL_Torch_Mode(void)
-{
-    PK_DBG(" FL_Torch_Mode line=%d\n",__LINE__);	
-    if(mt_set_gpio_mode(GPIO_ENT,GPIO_MODE_00)){PK_DBG("[constant_flashlight] set gpio mode failed!! \n");}
-    if(mt_set_gpio_dir(GPIO_ENT,GPIO_DIR_OUT)){PK_DBG("[constant_flashlight] set gpio dir failed!! \n");}
-    if(mt_set_gpio_out(GPIO_ENT,GPIO_OUT_ZERO)){PK_DBG("[constant_flashlight] set gpio failed!! \n");}
-}
-#endif
 
 /*****************************************************************************
 User interface
@@ -265,18 +231,7 @@ static int constant_flashlight_ioctl(MUINT32 cmd, MUINT32 arg)
 
     	case FLASH_IOC_SET_DUTY :
     		PK_DBG("FLASHLIGHT_DUTY: %d\n",arg);
-#if 1//defined(SLT_DRV_W8160_CONFIG)
-		if(arg == 1)
-			{
-				FL_Flash_Mode();
-			}
-		else
-			{
-				FL_Torch_Mode();
-			}
-#else
     		FL_dim_duty(arg);
-#endif
     		break;
 
 

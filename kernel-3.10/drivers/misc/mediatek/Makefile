@@ -166,9 +166,9 @@ obj-y	+= eint/
 obj-$(CONFIG_MTK_SERIAL)	+= uart/
 obj-y	+= pmic_wrap/
 
+obj-y	+= ext_disp/
 ifeq ($(CONFIG_MTK_HDMI_SUPPORT),y)
 obj-y	+= hdmi/
-obj-y	+= ext_disp/
 endif
 
 obj-$(CONFIG_MTK_HIBERNATION) += hibcore/
