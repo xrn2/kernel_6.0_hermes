@@ -24,11 +24,10 @@ Works in rom(ALPS 6.0)
 	* Vibrator
 	* Battery 3000mah(stock table)
 	* Flashlight
-	* CAMERA(s5k3m2)
+	* CAMERA(s5k3m2 OV5670)
 
 
 * Don't work:
-	* Imgsensor(OV5670)
 	* Lens
 	* IR Blaster
 
