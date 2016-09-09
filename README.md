@@ -25,10 +25,11 @@ Works in rom(ALPS 6.0)
 	* Battery 3000mah(stock table)
 	* Flashlight
 	* CAMERA(s5k3m2 OV5670)
-
+	* Lens(DF9761BAF)
+	* Fixed graphics bug
+      	* Fixed bug headphones Disconnects
 
 * Don't work:
-	* Lens
 	* IR Blaster
 
 =================================================
