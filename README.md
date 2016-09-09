@@ -28,7 +28,7 @@ Works in rom(ALPS 6.0)
 	* Lens(DF9761BAF)
 	* Fixed graphics bug
       	* Fixed bug headphones Disconnects
-
+      	* 
 * Don't work:
 	* IR Blaster
 
