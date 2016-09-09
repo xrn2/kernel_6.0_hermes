@@ -31,6 +31,9 @@ Works in rom(ALPS 6.0)
       	* 
 * Don't work:
 	* IR Blaster
+	* LSM6DS3_GYRO
+	* LSM6DS3_ACCEL
+	* akm0991
 
 =================================================
 # BUILD
