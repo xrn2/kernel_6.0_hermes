@@ -32,7 +32,6 @@
 #define LCD_DEBUG(fmt)  printk(fmt)
 #endif
 
-
 static int lcm_intialized;
 
 static LCM_UTIL_FUNCS lcm_util;

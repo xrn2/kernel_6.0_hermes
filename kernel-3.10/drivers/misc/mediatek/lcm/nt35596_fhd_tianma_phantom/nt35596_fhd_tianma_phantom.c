@@ -32,7 +32,6 @@
 #define LCD_DEBUG(fmt)  printk(fmt)
 #endif
 
-
 static int lcm_intialized;
 
 static LCM_UTIL_FUNCS lcm_util;
@@ -377,12 +376,16 @@ static void lcm_resume(void)
     MDELAY(3);
     mt_set_gpio_out(GPIO_LCM_RST, GPIO_OUT_ONE);
     MDELAY(22);
-    if (lcm_intialized){
-        push_table(lcm_resume_setting, sizeof(lcm_resume_setting) / sizeof(struct LCM_setting_table), 1);  
-    }else{
+        #ifdef BUILD_LK
         push_table(lcm_initialization_setting, sizeof(lcm_initialization_setting) / sizeof(struct LCM_setting_table), 1);  
+        #else
+        if (lcm_intialized){
+            push_table(lcm_resume_setting, sizeof(lcm_resume_setting) / sizeof(struct LCM_setting_table), 1);  
+        }else{
+            push_table(lcm_initialization_setting, sizeof(lcm_initialization_setting) / sizeof(struct LCM_setting_table), 1);  
+        }
+        #endif
     }
-}
 
 
 static unsigned int lcm_compare_id(void)

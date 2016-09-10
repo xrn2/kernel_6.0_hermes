@@ -98,6 +98,7 @@ else
 						obj-$(CONFIG_MTK_LENS_BU64745GWZAF_SUPPORT)+= common/bu64745gwzaf/
 						obj-$(CONFIG_MTK_LENS_DW9714AF_SUPPORT)    += common/dw9714af/
 						obj-$(CONFIG_MTK_LENS_DW9718AF_SUPPORT)    += common/dw9718af/
+						obj-$(CONFIG_MTK_LENS_DW9761BAF_SUPPORT)   += common/dw9761baf/
 						obj-$(CONFIG_MTK_LENS_FM50AF_SUPPORT)      += common/fm50af/
 						obj-$(CONFIG_MTK_LENS_MT9P017AF_SUPPORT)   += common/mt9p017af/
 						obj-$(CONFIG_MTK_LENS_OV8825AF_SUPPORT)    += common/ov8825af/
